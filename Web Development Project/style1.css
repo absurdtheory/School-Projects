@@ -1,0 +1,52 @@
+﻿.staff {
+    width: 75%;
+    height: 100%;
+    position: relative;
+    background-color: white;
+    border: 5px double teal;
+    margin: auto;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    clear: left;
+    overflow-y: scroll;
+    text-align: center;
+}
+
+.staffImage{
+    margin-left: 20%;
+
+}
+
+.staffImage1{
+    margin-left: 10%;
+}
+
+.staffBio {
+    text-align: center;
+    width:80%;
+}
+
+.s1 {
+    display: inline-block;
+    text-align:left;
+}
+
+.s2 {
+    display: inline-block;
+    text-align: left;
+}
+
+.s3 {
+    display: inline-block;
+    text-align: left;
+}
+
+.s4 {
+    display: inline-block;
+    text-align: left;
+}
+
+.s5 {
+    display: inline-block;
+    text-align: left;
+}

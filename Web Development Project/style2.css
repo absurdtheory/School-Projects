@@ -1,0 +1,19 @@
+﻿.contactus {
+    width: 75%;
+    position: relative;
+    background-color: white;
+    border: 5px double teal;
+    margin: auto;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    clear: left;
+    text-align: center;
+    overflow-x: auto;
+    font-family: 'Roboto Slab', serif;
+}
+
+.request {
+    text-align: center;
+    font-size: larger;
+    font-family: 'Roboto Slab', serif;
+}
