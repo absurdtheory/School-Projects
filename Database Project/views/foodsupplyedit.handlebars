@@ -1,0 +1,21 @@
+﻿
+    <div class="headerdiv"><h2>Edit Food Info</h2></div><br />
+    <div class="edit">
+        <form id="editfoodsupplyform">
+            Brand Name:<br />
+            <input type="text" id="bname" name="bname" value="{{food.bname}}" required> <br />
+
+            Product Name:<br />
+            <input type="text" id="pname" name="pname" value="{{food.pname}}" required/><br />
+
+            Quantity in Stock:<br />
+            <input type="number" id="amount" name="amount" value="{{food.amount}}" min="0"/><br />
+
+        </form>
+        <br />
+        <input id="submit" type="submit" value="Save" onclick="updateFood({{food.id}})" />
+    </div>
+<br />
+<br />
+
+<script type="text/javascript" src="../js/updateFoodSupply.js"></script>

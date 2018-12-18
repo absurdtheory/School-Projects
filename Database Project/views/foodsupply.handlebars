@@ -1,0 +1,52 @@
+﻿
+
+    <div class="headerdiv"><h2>Food Supply</h2></div>
+
+    <div class="outerdiv">
+        <h3>Add new food type</h3>
+        <div class="innerdiv">
+            <form id="addfoodform" action="/foodsupply" method="post">
+                Brand Name:<br />
+                <input type="text" id="bname" name="bname"> <br />
+
+                Product Name:<br />
+                <input type="text" id="pname" name="pname" /><br /><br />
+
+                <input id="submitFoodBtn" type="submit" value="Submit" />
+            </form>
+            <br />
+            
+        </div>
+    </div>
+    <br />
+    <h3>Current Food Supply</h3>
+
+    <div class="alert"><span class="closebtn" onclick="this.parentElement.style.display = 'none';">&times</span>
+        <strong>Warning!</strong> Please note Food cannot be deleted while dogs are currently on it. Dogs must have food to eat!
+    </div>
+    <table id="foodtable">
+        <tr>
+            <th>Brand Name</th>
+            <th>Product Name</th>
+            <th># of Dogs On</th>
+            <th>Current Stock</th>
+	    <th>Delete</th>
+	    <th>Edit</th>
+        </tr>
+        {{#if food}}
+        {{#each food}}
+        <tr>
+            <td>{{this.bname}}</td>
+            <td>{{this.pname}}</td>
+            <td>{{this.numberd}}</td>
+            <td>{{this.amount}}</td>
+            <td><button onclick="deleteFood({{this.id}})">Delete</button></td>
+            <td><a href="/foodsupply/{{this.id}}">Edit</a></td>
+        </tr>
+        {{/each}}
+        {{/if}}
+    </table>
+<br />
+<br />
+    <script type="text/javascript" src="../js/addFood.js"></script>
+ 

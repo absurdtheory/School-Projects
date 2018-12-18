@@ -1,0 +1,184 @@
+﻿body{
+    background-image: url("/static/images/spiderbackground.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    margin:0;
+}
+
+#header{
+    background-image: url("/static/images/scrollbanner1.png");
+    text-align:center;
+    font-family: 'Griffy', sans-serif;
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin:0;
+    padding: 30px;
+    margin-top:60px;
+}
+
+input{
+    width:50%;
+}
+
+.innerdiv, .edit {
+    font-family: 'montserrat', sans-serif;
+    background: rgba(0, 0, 0, 0.7);
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+    color: white;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.edit input[type="radio"], .innerdiv input[type="radio"]{
+    width: 20px;
+    text-align:left;
+}
+
+
+.outerdiv {
+    padding: 30px;
+    text-align:center;
+}
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+    width: 75%;
+    border-collapse: collapse;
+}
+
+table, th, td{
+    border: 1px groove black;
+    table-layout: fixed;
+    text-align: center;
+}
+
+th, td {
+    font-family: 'montserrat', sans-serif;
+    overflow-x: auto;
+}
+
+th{
+    background-color: darkred;
+    color: ghostwhite;
+}
+
+td{
+    background-color: lightgoldenrodyellow;
+}
+
+td img{
+    object-fit:contain;
+    max-width: 100%;
+    height: auto;
+}
+
+h2, h3{
+    text-align: center;
+    color: ghostwhite;
+}
+
+h3 {
+    font-family: 'niramit', sans-serif;
+}
+
+#mainpagediv{
+    text-align:center;
+    font-size:large;
+    font-family: 'niramit', sans-serif;
+    color:ghostwhite;
+}
+
+#mainpageimg {
+    width: 50%;
+}
+
+#mainpageheader {
+    font-family: 'niramit', sans-serif;
+}
+
+#headerh3 {
+    font-family: 'Griffy', sans-serif;
+    color:black;
+}
+
+
+.headerdiv {
+    background-image: url("/static/images/smallbanner.jpeg");
+    width: 25%;
+    text-align: center;
+    padding: 20px;
+    background-position: center;
+    margin: auto;
+    border-radius: 50%;
+    font-family: 'Griffy', sans-serif;
+    font-size: large;
+    letter-spacing: 2px;
+}
+
+.headerdiv img{
+    max-width:50%;
+    max-height:50%;
+}
+
+.navBar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: black;
+    color: ghostwhite;
+    margin: 0;
+    padding:0;
+    overflow: hidden;
+    font-family: "krub", sans-serif;
+    list-style-type: none;
+}
+
+.navL {
+    float: left;
+}
+
+.navL a {
+    display: block;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    padding: 14px 14px;
+}
+
+.navL a:hover {
+    background-color: darkorange;
+    color: black;
+    text-decoration: none;
+}
+
+.alert {
+    font-family: 'niramit', sans-serif;
+    padding: 20px;
+    background-color: yellow;
+    color: black;
+    width: 75%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
+
+.closebtn {
+    margin-left: 15px;
+    color: black;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+     color: red;
+}

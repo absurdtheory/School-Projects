@@ -1,0 +1,63 @@
+﻿<div class="headerdiv"><h2>Food Orders</h2></div>
+
+<div class="outerdiv">
+    <h3>Add a Food Order</h3>
+    <div class="innerdiv">
+        <form id="addfoodorderform" action="/orders" method="post">
+            Employee ID:<br />
+            <select id="pid" name="pid">
+                {{#if employee}}
+                {{#each employee}}
+                <option value="{{this.id}}">{{this.fname}} {{this.lname}}</option>
+                {{/each}}
+                {{/if}}
+            </select><br />
+
+            Food to Order:<br />
+            <select id="food" name="food">
+                {{#if food}}
+                {{#each food}}
+                <option value="{{this.id}}">{{this.bname}} {{this.pname}}</option>
+                {{/each}}
+                {{/if}}
+            </select><br />
+
+            Quantity to Order:<br />
+            <input type="number" id="quantity" name="quantity" required/><br /><br />
+            <input id="btnOrderSubmit" type="submit" value="Submit" />
+        </form>
+        <br />
+
+    </div>
+</div>
+<br />
+<h3>Food Order History</h3>
+<table id="orderfoodtable">
+    <tr>
+        <th>Employee ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Brand Name</th>
+        <th>Product Name</th>
+        <th>Quantity Ordered</th>
+        <th>Date/Time Ordered</th>
+        <th>Delete</th>
+    </tr>
+    {{#if order}}
+    {{#each order}}
+    <tr>
+        <td>{{this.eid}}</td>
+        <td>{{this.fname}}</td>
+        <td>{{this.lname}}</td>
+        <td>{{this.bname}}</td>
+        <td>{{this.pname}}</td>
+        <td>{{this.quantity}}</td>
+        <td>{{this.newDate}}</td>
+        <td><button onclick="deleteOrder({{fid}}, {{eid}}, '{{newDate}}')">Delete</button></td>
+    </tr>
+    {{/each}}
+    {{/if}}
+</table>
+<br />
+<br />
+<script type="text/javascript" src="../js/addOrder.js"></script>

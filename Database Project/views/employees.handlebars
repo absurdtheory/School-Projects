@@ -1,0 +1,61 @@
+﻿
+
+    <div class="headerdiv"><h2>Employees</h2></div>
+    <div class="outerdiv">
+        <h3>Add an Employee</h3>
+        <div class="innerdiv">
+            <form id="addemployeeform" action="/employees" method="post">
+                First Name:<br />
+                <input type="text" id="fname" name="fname"> <br />
+
+                Last Name:<br />
+                <input type="text" id="lname" name="lname" /><br />
+
+                Authorized to Order Food:<br />
+                <input type="radio" name="fsa" value="0" checked="checked" /> No
+                <input type="radio" name="fsa" value="1" /> Yes<br />
+
+                Phone Number:<br />
+                <input type="text" id="phone" name="phone" /><br />
+
+                Job Title:<br />
+                <input type="text" id="title" name="title" /><br /><br />
+                <input id="btnEmployeesSubmit" type="submit" value="Submit" />
+            </form>
+            <br />
+           
+        </div>
+    </div>
+
+    <h3>Current Employees</h3>
+    <table id="employeetable">
+        <tr>
+            <th>Employee ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Food Supply Authorization</th>
+            <th>Phone Number</th>
+            <th>Job Title</th>
+	    <th>Delete</th>
+	    <th>Edit</th>
+        </tr>
+        {{#if employees}}
+        {{#each employees}}
+        <tr>
+            <td>{{this.id}}</td>
+            <td>{{this.fname}}</td>
+            <td>{{this.lname}}</td>
+            <td>{{this.auth}}</td>
+            <td>{{this.phone}}</td>
+            <td>{{this.title}}</td>
+            <td hidden>{{this.fsa}}</td>
+            <td><button onclick="deleteEmployee({{this.id}})">Delete</button></td>
+            <td><a href="/employees/{{this.id}}">Edit</a></td>
+        </tr>
+        {{/each}}
+        {{/if}}
+    </table>
+<br />
+<br />
+    <script type="text/javascript" src="../js/addEmployee.js"></script>
+  

@@ -1,0 +1,33 @@
+﻿
+<div class="headerdiv"><h2>Edit Adopter Info</h2></div><br />
+    <div class="edit">
+        <form id="editadopterform" action="/adopters" method="post">
+           First Name:<br />
+           <input type="text" id="fname" name="fname" value="{{adopter.fname}}"> <br />
+
+           Last Name:<br />
+           <input type="text" id="lname" name="lname" value="{{adopter.lname}}"><br />
+
+           Street Address:<br />
+           <input type="text" id="saddress" name="saddress" value="{{adopter.saddress}}" /><br />
+
+            City:<br />
+            <input type="text" id="city" name="city" value="{{adopter.city}}" /><br />
+
+            State:<br />
+            <input type="text" id="state" name="state" value="{{adopter.state}}" /><br />
+
+            Zipcode:<br />
+            <input type="text" id="zip" name="zip" value="{{adopter.zip}}" /><br />
+
+            Phone Number:<br />
+            <input type="text" id="phone" name="phone" value="{{adopter.phone}}" /><br />
+            <br />
+        </form>
+        <input id="submit" type="submit" value="Save" onclick="updateAdopter({{adopter.id}})" />
+        <br />
+
+     </div>
+<br />
+<br />
+<script type="text/javascript" src="../js/updateAdopter.js"></script>

@@ -1,0 +1,62 @@
+﻿
+<div class="headerdiv">
+    <h2>Working Relationships</h2>
+</div>
+<div class="outerdiv">
+    <h3>Add Employee/Dog working relationship</h3>
+    <div class="innerdiv">
+        <form id="addworksform" action="/works" method="post">
+            Employee:<br />
+            <select id="pid" name="pid">
+                {{#if employees}}
+                {{#each employees}}
+                <option value="{{this.id}}"> {{this.id}}: {{this.fname}} {{this.lname}}</option>
+                {{/each}}
+                {{/if}}
+            </select><br />
+
+            Dog:<br />
+            <select id="did" name="did">
+                {{#if dogs}}
+                {{#each dogs}}
+                <option value="{{this.id}}">{{this.id}}: {{this.name}}</option>
+                {{/each}}
+                {{/if}}
+            </select><br /><br />
+            <input id="btnWorkSubmit" type="submit" value="Submit" />
+        </form>
+        <br />
+
+    </div>
+</div>
+<br />
+<h3>Current Working Relationships</h3>
+<table id="workstable">
+    <tr>
+        <th>Employee ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Job Title</th>
+        <th>Dog ID</th>
+        <th>Dog Name</th>
+        <th>Delete</th>
+    </tr>
+    {{#if works}}
+    {{#each works}}
+    <tr>
+        <td>{{this.eid}}</td>
+        <td>{{this.fname}}</td>
+        <td>{{this.lname}}</td>
+        <td>{{this.title}}</td>
+        <td>{{this.did}}</td>
+        <td>{{this.name}}</td>
+        <td><button onclick="deleteWork({{eid}},{{did}})">Delete</button></td>
+    </tr>
+    {{/each}}
+    {{/if}}
+</table>
+<br />
+<br />
+<script type="text/javascript" src="../js/addWork.js"></script>
+
+

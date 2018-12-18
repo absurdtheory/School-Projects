@@ -1,0 +1,33 @@
+﻿
+
+    <div class="headerdiv"><h2>Edit Employee Info</h2></div><br />
+    <div class="edit">
+        <form id="editemployeeform">
+
+            First Name:<br />
+            <input type="text" id="fname" name="fname" value="{{employee.fname}}" required> <br />
+
+            Last Name:<br />
+            <input type="text" id="lname" name="lname" value="{{employee.lname}}" required/><br />
+
+            Authorized to Order Food:<br />
+            <select id="fsa" name="fsa">
+                <option value="{{employee.fsa}}">{{employee.auth}}</option>
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select><br />
+
+            Phone Number:<br />
+            <input type="text" id="phone" name="phone" value="{{employee.phone}}" required/><br />
+
+            Job Title:<br />
+            <input type="text" id="title" name="title" value="{{employee.title}}" required/><br />
+
+        </form>
+        <br />
+        <input id="submit" type="submit" value="Save" onclick="updateEmployee({{employee.id}})" />
+    </div>
+ <br />
+<br />
+
+<script type="text/javascript" src="../js/updateEmployee.js"></script>

@@ -1,0 +1,82 @@
+﻿    <div class="headerdiv"><h2>Browse Dogs</h2></div>
+    <div class="outerdiv">
+        <img id="browseimg" src="/static/images/doge.png" />
+        <h3>Search Criteria</h3>
+        <div class="innerdiv">
+            <form id="searchdogform" action="" method="">
+                <label>Name:</label><br />
+                <input type="text" id="name" name="name"> <br />
+
+                <label>Birthdate:</label><br />
+                <input type="date" id="birthdate" name="birthdate"><br />
+
+                <label>Breed:</label><br />
+                <input type="text" id="breed" name="breed" /><br />
+
+                <label>Sex:</label><br />
+                <select id="sex" name="sex">
+                    <option value="All">No Preference</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select><br />
+
+                <label>Food:</label><br />
+                <select id="food" name="food">
+                    <option value="any"> Any food </option>
+                    {{#if food}}
+                    {{#each food}}
+                    <option value="{{this.id}}">{{this.bname}} {{this.pname}}</option>
+                    {{/each}}
+                    {{/if}}
+                </select><br />
+
+                <label>Adopted by:</label><br />
+                <select id="adopter" name="adopter">
+                    <option value="either">List both adopted and unadopted</option>
+                    <option value="NULL">None</option>
+                    <option value="any">Any</option>
+                    {{#if adopter}}
+                    {{#each adopter}}
+                    <option value="{{this.id}}">{{this.fname}} {{this.lname}}</option>
+                    {{/each}}
+                    {{/if}}
+                </select><br />
+                <br />
+                <input id="btnSearch" type="button" value="Search" onclick="searchDogs()"  />
+            </form>
+            <br />
+            
+        </div>
+    </div>
+    <br />
+    <h3>Search Results</h3>
+    <table id="dogtable">
+        <tr>
+            <th>Picture</th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Birthdate</th>
+            <th>Breed</th>
+            <th>Sex</th>
+            <th>Food</th>
+            <th>Adopted by</th>
+        </tr>
+        {{#if dogs}}
+        {{#each dogs}}
+        <tr>
+            <td><img src="{{this.image}}" /></td>
+            <td>{{this.id}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.bdate}}</td>
+            <td>{{this.breed}}</td>
+            <td>{{this.sex}}</td>
+            <td>{{this.bname}} {{this.pname}}</td>
+            <td>{{this.fname}} {{this.lname}}</td>
+        </tr>
+        {{/each}}
+        {{/if}}
+    </table>
+ <br />
+<br />
+<script type="text/javascript" src="/static/js/searchDogs.js"></script>

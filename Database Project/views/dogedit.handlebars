@@ -1,0 +1,52 @@
+﻿
+<div class="headerdiv"><h2>Edit Dog Info</h2></div><br />
+<div class="edit">
+    <form id="editdogform">
+        <label>Name:</label><br />
+        <input type="text" id="name" name="name" value="{{dog.name}}" required> <br />
+
+        <label>Birthdate:</label><br />
+        <input type="date" id="birthdate" name="birthdate" value="{{dog.bdate}}" required><br />
+
+        <label>Breed:</label><br />
+        <input type="text" id="breed" name="breed" value="{{dog.breed}}" required /><br />
+
+        <label>Sex:</label><br />
+        <select id="sex" name="sex">
+            <option value="{{dog.sex}}"> {{dog.sex}}</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+        </select><br />
+
+        <label>Food:</label><br />
+        <select id="foodType" name="foodType">
+            <option value="{{dog.foodType}}"> {{dog.bname}} {{dog.pname}}</option>
+            {{#if food}}
+            {{#each food}}
+            <option value="{{this.id}}">{{this.bname}} {{this.pname}}</option>
+            {{/each}}
+            {{/if}}
+        </select><br />
+
+        <label>Adopted by:</label><br />
+        <select id="adoptedBy" name="adoptedBy">
+            <option value="{{dog.adoptedBy}}"> {{dog.fname}} {{dog.lname}} </option>
+            <option value="">None</option>
+            {{#if adopters}}
+            {{#each adopters}}
+            <option value="{{this.id}}">{{this.fname}} {{this.lname}}</option>
+            {{/each}}
+            {{/if}}
+        </select><br />
+
+        <label>Image path/url:</label><br />
+        <input type="text" id="image" name="image" value="{{dog.image}}" /><br />
+    </form>
+    <br />
+    <input id="submit" type="submit" value="Save" onclick="updateDog({{dog.id}})" />
+</div>
+<br />
+<br />
+
+<script type="text/javascript" src="../js/updateDog.js"></script>
