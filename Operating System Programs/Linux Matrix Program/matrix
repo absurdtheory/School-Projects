@@ -1,0 +1,456 @@
+#!/bin/bash
+
+#matrix
+#By: Alexis Tucker
+#CS 344
+#tuckera6@oregonstate.edu
+#10/03/18
+
+
+#dims function
+#displays the dimiensionw of a matrix as "row column"
+
+dims(){
+
+#tempfile variable
+inputFile="tempFile"
+
+#trap to remove temp files if program is interrupted
+trap "rm -f $inputFile$$ ; echo 'SIGINT received, removing temp files'; exit 1" INT
+
+#if the are two or more arguments, error
+if (( "$#" >= '2' ))
+then
+	echo "Error: Too many arguments" 1>&2
+	exit 1
+fi
+
+#if arguments is 0, cat from stdin to inputFile
+#else if arguments is 1, check if file is valid
+#if valid, cat argument 1 to inputFile
+if [ "$#" = "0" ]
+then	
+
+	cat > $inputFile$$
+
+elif [ "$#" = "1" ]
+then
+	
+	if [ ! -r $1 ]
+	then
+        	echo "Error: file unreadable" 1>&2
+		exit 1
+	fi
+
+	cat $1 > $inputFile$$
+fi
+
+#calculate rows and columns
+
+#source:
+# https://stackoverflow.com/questions/5761212/count-number-of-columns-in-bash
+row=$(cat $inputFile$$ | wc -l)
+
+
+#source: @40 on Piazza
+read -r line < $inputFile$$
+colcount=$(echo $line | wc -w)
+
+#display results
+echo "$row $colcount"
+
+#remove tempfile
+rm $inputFile$$ -f
+
+
+}
+
+
+#transpose function
+#takes one MxN matrix and displays it as an NxM matrix
+
+transpose(){
+
+#tempfile variables
+inputFile="tempinputfile"
+tempRow="temprowfile"
+
+#trap to remove tempfiles if program is interrupted
+trap "rm -f $inputFile$$ $tempRow$$ ; echo 'SIGINT received, removing temp files'; exit 1" INT
+
+
+#if there is more than 1 argument, error
+if (( "$#" >= "2"))
+then
+	echo "Error: Too many arguments" 1>&2	
+	exit 1
+fi
+
+#if there is 0 arguments, cat from stdin to tempfile
+#if there is 1 argument, check for readable file,
+#if readable, cat $1 to tempfile
+if [ "$#" = "0" ]
+then
+	cat > $inputFile$$
+elif [ "$#" = "1" ]
+then
+
+	if [ ! -r $1 ]
+	then
+        	echo "Error: File unreadable" 1>&2
+       	  	exit 1
+	fi
+
+	cat $1 > $inputFile$$
+fi
+
+#calculate number of Columns
+read -r line < $inputFile$$
+numCol=$(echo $line | wc -w)
+
+#for each column, cut it and past it as a row into tempRow
+#source: 
+#https://www.thelinuxrain.com/articles/transposing-rows-and-columns-3-methods
+for(( i= 1; i <= numCol; i++))
+do
+	cut -f"$i"  $inputFile$$ | paste -s >> "$tempRow$$"
+	
+done
+
+#display results
+cat $tempRow$$
+
+#remove tempfiles
+rm $tempRow$$ -f
+rm $inputFile$$ -f
+
+
+}
+
+#Mean function
+#takes one MxN matrix from stdin or $1
+#calculates the mean and displays the result as 1xN row vector
+
+mean(){
+
+#tempfile variables
+tempFile="tempfile"
+tempRow="temprowfile"
+inputFile="tempinputfile"
+tempFile1="tempfile1"
+
+#trap to delete temp files if program is interrupted
+trap "rm -f $tempFile$$ $tempRow$$ $inputFile$$ $tempCol$$ $tempFile1$$ ; echo 'SIGINT received, removing temp files'; exit 1" INT
+
+#if two of more arguments are supplied, error
+if (("$#" >= "2"))
+then
+	echo "Error: Too many arguments" 1>&2
+	exit 1
+fi
+
+#if no argument, get input from STDIN, else if one argument
+#get input from $1
+if [ "$#" = "0" ]
+then
+	cat > $inputFile$$
+elif [ "$#" = "1" ]
+then
+
+	#if file is not readable, error 
+	if [ ! -r $1 ]
+	then
+        	echo "Error: file unreadable" 1>&2
+ 	     	exit 1
+	fi
+
+	cat $1 > $inputFile$$
+
+fi
+
+#calculate number of rows and columns in the matrix
+numRows=$(cat $inputFile$$ | wc -l)
+
+read -r line < $inputFile$$
+numCols=$(echo $line | wc -w)
+
+#transpose the matrix and put it in tempfile1
+for ((i=1; i <= numCols; i++))
+do
+	cut -f"$i" $inputFile$$ | paste -s >> $tempFile1$$
+	
+done
+
+#for each row in tempFile1
+while read myLine
+do
+	#zero out the sum for each row
+	sum=0
+
+	#for each column in the row, add number to sum
+	for i in $myLine
+	do
+		sum=$(( sum + i ))
+	done
+
+	#calculate mean of row, rounding appropriately
+	mean=$(( (sum + (numRows/2)*( (sum>0)*2-1 )) / numRows ))
+
+	#send mean of each row to $tempRow
+	echo "$mean" >> $tempRow$$
+	
+done <$tempFile1$$
+
+#convert the column in temprow into a row in tempFile
+cut -f1 $tempRow$$ | paste -s > $tempFile$$
+
+#display results
+cat $tempFile$$
+
+#remove tempfiles
+rm $tempFile$$ -f
+rm $tempFile1$$ -f
+rm $tempRow$$ -f
+rm $inputFile$$ -f
+
+}
+
+#Add function
+#Add two MxN matrices and display results as an MxN matrix
+
+add() {
+
+#tempfile variables
+inputFile1="tempinputfile1"
+inputFile2="tempinputfile2"
+tempFile1="tempfile1"
+tempFile2="tempfile2"
+tempFile3="tempfile3"
+tempFile4="tempfile4"
+
+#trap to remove tempfiles if program is interrupted
+trap "rm -f $inputFile1$$ $inputFile2$$ $tempFile1$$ $tempFile2$$ $tempFile3$$ $tempFile4$$ ; echo 'SIGINT received, removing temp files'; exit 1" INT
+
+#If not two arguments, error
+if (("$#" != "2"))
+then
+	echo "Error: only two arguments allowed" 1>&2
+	exit 1
+fi
+
+#check if both arguments are readable files
+if [ ! -r $1 ]
+then
+	echo "Error: file unreadable" 1>&2
+	exit 1
+fi
+
+if [ ! -r $2 ]
+then
+	echo "Error: file unreadable" 1>&2
+	exit 1
+fi
+
+#send contents of arguments to temp files
+cat $1 >$inputFile1$$
+cat $2 >$inputFile2$$
+
+#calculate the rows and columns for each matrix
+numRows=$(cat $inputFile1$$ | wc -l)
+read -r line < $inputFile1$$
+numCols=$(echo $line | wc -w)
+
+#variable to keep track of which row in each matrix is being processed
+getRow=$numRows
+
+numRows2=$(cat $inputFile1$$ | wc -l)
+read -r line < $inputFile2$$
+numCols2=$(echo $line | wc -w)
+
+#if dimensions do not match, error and delete temp files
+if (( numRows != numRows2 ))
+then
+	echo "Error: dimensions must be the same" 1>&2
+	rm $inputFile1$$ $inputFile2$$ -f
+	exit 1
+fi
+
+if (( numCols != numCols2 ))
+then
+	echo "Error: dimensions must be the same" 1>&2
+	rm $inputFile1$$ $inputFile2$$
+	exit 1
+fi
+
+for((i=1; i<= numRows; i++))
+do
+	#input rows into tempfiles
+	cat $inputFile1$$ | tail -n "$getRow" | head -n 1 > $tempFile1$$
+	cat $inputFile2$$ | tail -n "$getRow" | head -n 1 > $tempFile2$$ 
+
+	((getRow--))
+	
+	#clear out #tempfile 3
+	echo -n "" > $tempFile3$$
+
+	for((c=1; c<= numCols; c++))
+	do
+		#for each column in the rows, add to associated 
+		#column in the other row
+		tn1=$(cut -f"$c" $tempFile1$$)
+		tn2=$(cut -f"$c" $tempFile2$$)
+		add=$((tn1 + tn2))
+	
+		#if on the last column, do not add newline to preserve format
+		#send add to tempfile3 for each column pair
+		if ((c == numCols))
+		then	
+			echo -n "$add" >> $tempFile3$$
+		else
+			echo "$add" >> $tempFile3$$
+		fi
+	done
+ 	
+	#convert column of sums (tempfile3) into a row and sent to tempfile4
+	echo "$(cat $tempFile3$$ | tr '\n' '\t')" >> $tempFile4$$
+
+done
+
+#displaying resulting matrix
+cat $tempFile4$$
+
+#remove temp files
+rm $inputFile1$$ -f
+rm $inputFile2$$ -f
+rm $tempFile1$$ -f
+rm $tempFile2$$	-f
+rm $tempFile3$$ -f
+rm $tempFile4$$ -f
+
+}
+
+#Multiply function
+#takes MxN and NxP matrices and returns an MxP matrix
+
+multiply() {
+
+#tempfiles to avoid arrays
+inputFile1="tempfile1"
+inputFile2="tempfile2"
+tempFile1="tempm1"
+tempFile2="tempm2"
+tempFile3="tempm3"
+tempFile4="tempm4"
+
+#delete temp files if program is interupted
+trap "rm -f $inputFile1$$ $inputFile2$$ $tempFile1$$ $tempFile2$$ $tempFile3$$ $tempFile4$$ ; echo 'SIGINT received, removing temp files'; exit 1" INT
+
+
+#if two Matrices are not provided, Error
+if (( "$#" != "2" ))
+then
+	echo "Error: Must have two arguments" 1>&2
+	exit 1
+fi
+
+#if file1 is not readable, error
+if [ ! -r $1 ] 
+then
+	echo "Error: file unreadable" 1>&2
+	exit 1
+fi
+
+#if file2 is not readable, error
+if [ ! -r $2 ]
+then
+	echo "Error: file unreadable" 1>&2
+	exit 1
+fi
+
+
+#Put the contents of arguments 1 and 2 into tempfiles
+cat $1 > $inputFile1$$
+cat $2 > $inputFile2$$
+
+
+#calculate rows and columns for each matrix
+m1Rows=$(cat $inputFile1$$ | wc -l)
+read -r line < $inputFile1$$
+m1Cols=$(echo $line | wc -w)
+
+m2Rows=$(cat $inputFile2$$ | wc -l)
+read -r line < $inputFile2$$
+m2Cols=$(echo $line | wc -w)
+getRow=$m1Rows
+
+#if matrix1 columns does not match matrix2 rows, error
+if ((m2Rows != m1Cols))
+then
+	echo "Error: mismatched dimensions" 1>&2
+	rm $inputFile1$$ -f
+	rm $inputFile2$$ -f
+	exit 1
+fi
+
+#variable to keep track of which row is currently in use
+getRow=$m1Rows
+		
+for ((i=1; i <= m1Rows; i++))
+do
+	#put matrix1 row into tempfile1
+	cat $inputFile1$$ | tail -n "$getRow" | head -n 1 > $tempFile1$$
+	
+	#clear tempfile3 to prevent errors in calculations
+	echo -n "" > $tempFile3$$
+
+	for ((s=1; s <= m2Cols; s++))
+	do
+		#put matrix2 column into tempfile2 and convert it into a row 
+		cut -f"$s" $inputFile2$$ | paste -s > $tempFile2$$						
+		#zero out sum for each column
+		sum=0		
+
+		for ((z=1; z <= m1Cols; z++ ))
+		do
+			#get matching elements from each row
+			m1=$(cut -f"$z" $tempFile1$$)
+			m2=$(cut -f"$z" $tempFile2$$)	
+
+			#multiply elements together
+			m3=$((m1 * m2))
+			
+			#add to sum
+			sum=$((sum + m3))
+		
+		done
+		
+		#if the last sum for the row is added, do not add \n
+		#store sum for all columns multiplied by one row in tempfile3
+		if ((s == m2Cols))
+		then
+			echo -n "$sum" >> $tempFile3$$
+		else
+			echo "$sum" >> $tempFile3$$
+		fi
+	done
+	
+	#convert tempfile3 to a row and add it to tempFile4
+	echo "$(cat $tempFile3$$ | tr '\n' '\t')" >> $tempFile4$$
+	((getRow--))				
+				
+done
+
+#display resulting matrix
+cat $tempFile4$$
+
+#remove temp files
+rm $tempFile4$$ -f
+rm $tempFile3$$ -f
+rm $tempFile2$$ -f
+rm $tempFile1$$ -f
+rm $inputFile1$$ -f
+rm $inputFile2$$ -f
+
+
+}
+"$@"
