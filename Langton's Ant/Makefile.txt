@@ -1,0 +1,19 @@
+all: Lab_7
+
+Lab_7: main.o Menu.o Queue.o inputValid.o
+	g++ -g main.o Menu.o Queue.o inputValid.o -o Lab_7
+
+main.o: main.cpp Menu.hpp
+	g++ -std=c++11 -c main.cpp
+
+Menu.o: Menu.cpp Menu.hpp Inputvalid.hpp
+	g++ -std=c++11 -c Menu.cpp
+
+Queue.o: Queue.cpp Queue.hpp
+	g++ -std=c++11 -c Queue.cpp
+
+inputValid.o: inputValid.cpp
+	g++ -c inputValid.cpp
+
+clean:
+	rm *.o Lab_7
